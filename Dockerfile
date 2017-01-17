@@ -9,41 +9,53 @@ RUN mkdir -p /usr/local/etc \
 	} >> /usr/local/etc/gemrc
 
 ENV RUBY_MAJOR 2.3
-ENV RUBY_VERSION 2.3.1
-ENV RUBY_DOWNLOAD_SHA256 b87c738cb2032bf4920fef8e3864dc5cf8eae9d89d8d523ce0236945c5797dcd
-ENV RUBYGEMS_VERSION 2.6.6
+ENV RUBY_VERSION 2.3.3
+ENV RUBY_DOWNLOAD_SHA256 1a4fa8c2885734ba37b97ffdb4a19b8fba0e8982606db02d936e65bac07419dc
+ENV RUBYGEMS_VERSION 2.6.8
 
 # some of ruby's build scripts are written in ruby
-# we purge this later to make sure our final image uses what we just built
+#   we purge system ruby later to make sure our final image uses what we just built
 RUN set -ex \
+	\
 	&& buildDeps=' \
 		bison \
 		libgdbm-dev \
 		ruby \
 	' \
 	&& apt-get update \
-    && apt-get install -y git vim \
-    && apt-get install -V -y libatk1.0-dev libpango1.0-dev libgtk2.0-dev \
-    && apt-get install -y build-essential \
 	&& apt-get install -y --no-install-recommends $buildDeps \
 	&& rm -rf /var/lib/apt/lists/* \
-	&& curl -fSL -o ruby.tar.gz "http://cache.ruby-lang.org/pub/ruby/$RUBY_MAJOR/ruby-$RUBY_VERSION.tar.gz" \
-	&& echo "$RUBY_DOWNLOAD_SHA256 *ruby.tar.gz" | sha256sum -c - \
+	\
+	&& wget -O ruby.tar.xz "https://cache.ruby-lang.org/pub/ruby/${RUBY_MAJOR%-rc}/ruby-$RUBY_VERSION.tar.xz" \
+	&& echo "$RUBY_DOWNLOAD_SHA256 *ruby.tar.xz" | sha256sum -c - \
+	\
 	&& mkdir -p /usr/src/ruby \
-	&& tar -xzf ruby.tar.gz -C /usr/src/ruby --strip-components=1 \
-	&& rm ruby.tar.gz \
+	&& tar -xJf ruby.tar.xz -C /usr/src/ruby --strip-components=1 \
+	&& rm ruby.tar.xz \
+	\
 	&& cd /usr/src/ruby \
-	&& { echo '#define ENABLE_PATH_CHECK 0'; echo; cat file.c; } > file.c.new && mv file.c.new file.c \
+	\
+# hack in "ENABLE_PATH_CHECK" disabling to suppress:
+#   warning: Insecure world writable dir
+	&& { \
+		echo '#define ENABLE_PATH_CHECK 0'; \
+		echo; \
+		cat file.c; \
+	} > file.c.new \
+	&& mv file.c.new file.c \
+	\
 	&& autoconf \
-	&& ./configure --disable-install-doc \
+	&& ./configure --disable-install-doc --enable-shared \
 	&& make -j"$(nproc)" \
 	&& make install \
+	\
 	&& apt-get purge -y --auto-remove $buildDeps \
-	&& gem update --system $RUBYGEMS_VERSION \
-    && gem install pry \
-	&& rm -r /usr/src/ruby
+	&& cd / \
+	&& rm -r /usr/src/ruby \
+	\
+	&& gem update --system "$RUBYGEMS_VERSION"
 
-ENV BUNDLER_VERSION 1.12.5
+ENV BUNDLER_VERSION 1.13.7
 
 RUN gem install bundler --version "$BUNDLER_VERSION"
 
