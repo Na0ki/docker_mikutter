@@ -1,7 +1,7 @@
 FROM ruby:2.3.3
 MAINTAINER ahiru3net
 
-RUN apt-get install -V -y libatk1.0-dev
+RUN apt-get install -y libatk1.0-dev
 
 USER mikutter
 ENV WORKDIR /home/mikutter
