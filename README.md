@@ -10,7 +10,7 @@ ruby 2.3.1の環境でmikutterをgitから落としてきます
 ```
 $ git clone https://github.com/Na0ki/docker_mikutter.git
 $ cd docker_mikutter
-$ docker build -t mikutter/mikutter:mikutter-dev .
+$ docker build -t mikutter:mikutter-dev .
 ```
 
 コンテナイメージのIDを確認
@@ -20,9 +20,9 @@ $ docker images
 
 実行
 ```
-$ docker run -it イメージID /bin/bash
+$ docker run -it --name mikutter イメージID /bin/bash
 ```
 
 # 作った環境
-OSX 10.11.6  
-Docker version 1.12.0, build 8eab29e
+CentOS Linux release 7.3.1611  
+Docker version 1.12.6, build 78d1802
