@@ -28,4 +28,3 @@ RUN cd "$HOME" && \
     git checkout develop && \
     bundle install
 
-CMD [ "/bin/bash" ]

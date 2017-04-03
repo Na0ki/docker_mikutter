@@ -1,0 +1,11 @@
+version: '2'
+services:
+  mikutter:
+    image: mikutter:mikutter-dev
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: mikutter
+    command: /bin/bash
+    tty: true
+
