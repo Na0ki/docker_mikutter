@@ -10,10 +10,9 @@ RUN set -x && apt-get update && \
 	git \
 	vim \
 	build-essential \
-	sudo
-
-# add group and user
-RUN set -x && groupadd --system -g 1000 mikutter && \
+	sudo && \
+	# add group and user 
+	groupadd --system -g 1000 mikutter && \
 	useradd -m -s /bin/bash -g mikutter -u 1000 -d /home/mikutter mikutter && \
 	echo mikutter:mikutter | chpasswd && \
 	echo '/usr/local/bundle ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/mikutter && \
