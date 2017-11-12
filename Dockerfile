@@ -1,32 +1,24 @@
-FROM ruby:2.5.3
-MAINTAINER ahiru3net
+FROM ruby:2.5.3-alpine
+LABEL MAINTAINER="ahiru3net"
 
-RUN set -x && apt update && \
-	apt install -y \
-	libpango1.0-dev \
-	libgtk2.0-dev \
-	libatk1.0-dev \
-	libgirepository1.0-dev \
-    	libidn11-dev \
-	git \
-	vim \
-	build-essential \
-	sudo && \
-	# add group and user 
-	groupadd --system -g 1000 mikutter && \
-	useradd -m -s /bin/bash -g mikutter -u 1000 -d /home/mikutter mikutter && \
-	echo mikutter:mikutter | chpasswd && \
-	echo '/usr/local/bundle ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/mikutter && \
-	chmod 0440 /etc/sudoers.d/mikutter && \
-    	chown -R mikutter:mikutter /usr/local/bundle
+ARG WORK_DIR="/home/mikutter"
 
-USER mikutter
-ENV WORKDIR /home/mikutter
-ENV HOME /home/mikutter
+ARG USER_NAME="mikutter"
+ARG USER_ID="1000"
+
+RUN set -x \
+    && apk upgrade --update \
+    && apk --no-cache add \
+      gcc musl-dev make g++ file alpine-sdk git \
+      gtk+2.0-dev gobject-introspection-dev \
+	&& adduser -D -u ${USER_ID} -h ${WORK_DIR} ${USER_NAME}
+
+USER ${USER_NAME}
+
+WORKDIR ${WORK_DIR}
 
 RUN set -x && \
-	cd "$HOME" && \
 	git clone git://toshia.dip.jp/mikutter.git && \
-    	cd mikutter && \
-    	git checkout develop && \
-    	bundle install
+    cd mikutter && \
+    git checkout develop && \
+    bundle install

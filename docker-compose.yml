@@ -6,7 +6,7 @@ services:
       context: ./
       dockerfile: ./Dockerfile
     container_name: mikutter
-    command: /bin/bash
+    command: /bin/sh
     stdin_open: true
     tty: true
 
