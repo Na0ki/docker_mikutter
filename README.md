@@ -14,5 +14,6 @@ $ docker-compose up --build
 ```
 
 # 作った環境
-CentOS Linux release 7.3.1611  
-Docker version 1.12.6, build 78d1802
+Linux 4.14.5-1-ARCH #1 SMP PREEMPT Sun Dec 10 14:50:30 UTC 2017 
+Docker version 17.11.0-ce, build 1caf76ce6b
+

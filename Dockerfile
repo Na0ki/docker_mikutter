@@ -1,12 +1,13 @@
-FROM ruby:2.4.1
+FROM ruby:2.4.3
 MAINTAINER ahiru3net
 
-RUN set -x && apt-get update && \
-	apt-get install -y \
+RUN set -x && apt update && \
+	apt install -y \
 	libpango1.0-dev \
 	libgtk2.0-dev \
 	libatk1.0-dev \
 	libgirepository1.0-dev \
+    libidn11-dev \
 	git \
 	vim \
 	build-essential \
