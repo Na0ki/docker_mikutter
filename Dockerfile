@@ -7,7 +7,7 @@ RUN set -x && apt update && \
 	libgtk2.0-dev \
 	libatk1.0-dev \
 	libgirepository1.0-dev \
-    libidn11-dev \
+    	libidn11-dev \
 	git \
 	vim \
 	build-essential \
