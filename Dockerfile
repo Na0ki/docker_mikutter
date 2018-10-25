@@ -1,4 +1,4 @@
-FROM ruby:2.4.3
+FROM ruby:2.5.3
 MAINTAINER ahiru3net
 
 RUN set -x && apt update && \
