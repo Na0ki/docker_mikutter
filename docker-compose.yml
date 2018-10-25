@@ -6,6 +6,9 @@ services:
       context: ./
       dockerfile: ./Dockerfile
     container_name: mikutter
+    volumes:
+      - "./conf.d/config:/home/mikutter/.mikutter:Z"
+#    command: "/usr/local/bin/ruby /home/mikutter/mikutter/mikutter.rb --plugin=ahiru_yakuna,steinyaki --debug"
     command: /bin/sh
     stdin_open: true
     tty: true
