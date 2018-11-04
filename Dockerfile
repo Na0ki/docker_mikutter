@@ -10,8 +10,8 @@ RUN set -x \
     && apk upgrade --update \
     && apk --no-cache add --virtual .mikutdeps \
       gcc musl-dev make g++ file alpine-sdk git \
-      gtk+2.0-dev gobject-introspection-dev libidn-dev \
-      glib tzdata \
+      gtk+2.0-dev gobject-introspection-dev glib \
+    && apk --no-cache add libidn-dev \
 	&& adduser -D -u ${USER_ID} -h ${WORK_DIR} ${USER_NAME}
 
 WORKDIR ${WORK_DIR}
@@ -26,7 +26,7 @@ RUN set -x \
     && rm -r core/plugin/gui \
     && bundle install
 
-# RUN set -x \
-#     && apk del --purge .mikutdeps
+RUN set -x \
+    && apk del --purge .mikutdeps
 
 USER ${USER_NAME}

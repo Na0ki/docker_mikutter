@@ -1,16 +1,15 @@
-version: '2'
+version: '3'
+
 services:
   mikutter:
     image: mikutter:mikutter-dev
     build:
-      context: ./
-      dockerfile: ./Dockerfile
+      context: .
+      dockerfile: Dockerfile
     container_name: mikutter
-    volumes:
-      - "./conf.d/config:/home/mikutter/.mikutter:Z"
-    command: "/usr/local/bin/ruby /home/mikutter/mikutter/mikutter.rb --plugin=twitter_api_keys,ahiru_yakuna --debug"
+    command: "/usr/local/bin/ruby mikutter/mikutter.rb --debug"
     stdin_open: true
     tty: true
     environment:
-      - "TZ=Asia/Tokyo"
+    - "LC_ALL=en_US.UTF-8"
 
