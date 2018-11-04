@@ -11,7 +11,7 @@ RUN set -x \
     && apk --no-cache add --virtual .mikutdeps \
       gcc musl-dev make g++ file alpine-sdk git \
       gtk+2.0-dev gobject-introspection-dev libidn-dev \
-      glib \
+      glib tzdata \
 	&& adduser -D -u ${USER_ID} -h ${WORK_DIR} ${USER_NAME}
 
 WORKDIR ${WORK_DIR}

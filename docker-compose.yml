@@ -8,8 +8,9 @@ services:
     container_name: mikutter
     volumes:
       - "./conf.d/config:/home/mikutter/.mikutter:Z"
-#    command: "/usr/local/bin/ruby /home/mikutter/mikutter/mikutter.rb --plugin=ahiru_yakuna,steinyaki --debug"
-    command: /bin/sh
+    command: "/usr/local/bin/ruby /home/mikutter/mikutter/mikutter.rb --plugin=twitter_api_keys,ahiru_yakuna --debug"
     stdin_open: true
     tty: true
+    environment:
+      - "TZ=Asia/Tokyo"
 
