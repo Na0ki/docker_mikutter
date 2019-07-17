@@ -18,7 +18,7 @@ WORKDIR ${WORK_DIR}
 
 RUN set -x \
     && su mikutter \
-    && git clone git://toshia.dip.jp/mikutter.git \
+    && git clone git://toshi-a.net/mikutter.git \
     && cd mikutter \
     && git checkout master \
     && chown -R mikutter:mikutter ./ \
