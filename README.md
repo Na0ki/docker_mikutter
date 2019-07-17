@@ -5,7 +5,7 @@
 # なんこれ
 
 mikutter の master ブランチ環境をお手軽に構築できてしまうておくれたコンテナ  
-ruby 2.5.3 の環境で mikutter を git から落としてきます
+ruby 2.6.3 の環境で mikutter を git から落としてきます
 
 # 使い方
 
@@ -19,5 +19,6 @@ $ docker-compose up --build -d
 
 # 作った環境
 
-macOS 10.14  
-Docker version 18.06.1-ce, build e68fc7a
+macOS 10.14.5  
+Docker version 18.09.2, build 6247962
+
