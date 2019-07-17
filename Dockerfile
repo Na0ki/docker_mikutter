@@ -1,4 +1,4 @@
-FROM ruby:2.5.3-alpine
+FROM ruby:2.6.3-alpine
 LABEL MAINTAINER="ahiru3net"
 
 ARG WORK_DIR="/home/mikutter"
