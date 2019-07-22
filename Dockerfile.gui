@@ -1,0 +1,34 @@
+FROM ruby:2.6.3-slim-buster
+LABEL MAINTAINER="ahiru3net"
+
+ARG WORK_DIR="/home/mikutter"
+
+ARG USER_NAME="mikutter"
+ARG USER_ID="1000"
+
+ENV DEBIAN_FRONTEND noninteractive
+
+# setup user (mikutter)
+RUN set -x \
+  && useradd -m -u ${USER_ID} -d ${WORK_DIR} ${USER_NAME}
+
+# install apt packages
+RUN set -x \
+  && apt-get update \
+  && apt-get install -y \
+    git glib2.0 libglib2.0-dev libidn11-dev gobject-introspection \
+    vim fonts-noto fonts-noto-cjk fonts-noto-mono ttf-ancient-fonts
+
+WORKDIR ${WORK_DIR}
+
+# install mikutter
+RUN set -x \
+  && su mikutter \
+  && git clone git://toshi-a.net/mikutter.git \
+  && cd mikutter \
+  # TODO: change branch to master when merged
+  && git checkout topic/1367-fix-extract-settings \
+  && chown -R mikutter:mikutter ./ \
+  && bundle install
+
+USER ${USER_NAME}

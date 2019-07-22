@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  mikutter:
+    image: mikutter:mikutter-gui
+    build:
+      context: .
+      dockerfile: Dockerfile.gui
+    container_name: mikutter-gui
+    command: "/usr/local/bin/ruby mikutter/mikutter.rb --debug"
+    stdin_open: true
+    tty: true
+    environment:
+      - LC_ALL=ja_JP.UTF-8
+      - DISPLAY=host.docker.internal:0
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ./config:/home/mikutter/.mikutter
